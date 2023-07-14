@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"testing"
 
-	"gorm.io/gen/rawsql_driver"
 	"gorm.io/gorm"
+	"gorm.io/rawsql_driver"
 )
 
 func TestSqlGen(t *testing.T) {

@@ -1,10 +1,10 @@
-module gorm.io/gen/rawsql_driver
+module gorm.io/rawsql_driver
 
 go 1.18
 
 require (
 	github.com/pingcap/tidb/parser v0.0.0-20230327100244-b67c0321c05a
-	gorm.io/gorm v1.24.6
+	gorm.io/gorm v1.25.2
 )
 
 require (
