@@ -1,4 +1,4 @@
-package rawsql_driver
+package rawsql
 
 import (
 	"io/ioutil"

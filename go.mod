@@ -1,4 +1,4 @@
-module gorm.io/rawsql_driver
+module gorm.io/rawsql
 
 go 1.18
 
