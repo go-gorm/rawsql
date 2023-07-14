@@ -1,6 +1,6 @@
-# rawsql_driver
+# rawsql
 ```go
-func TestSql(t *testing.T) {
+func main() {
 	//rawsql := []string{
 	//	"CREATE TABLE `users` (\n                         `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,\n                         `created_at` datetime(3) DEFAULT NULL,\n                         `name` varchar(255) DEFAULT NULL COMMENT 'oneline',\n                         `address` varchar(255) DEFAULT '',\n                         `register_time` datetime(3) DEFAULT NULL,\n                         `alive` tinyint(1) DEFAULT NULL COMMENT 'multiline\\nline1\\nline2',\n                         `company_id` bigint(20) unsigned DEFAULT '666',\n                         `private_url` varchar(255) DEFAULT 'https://a.b.c ',\n                         PRIMARY KEY (`id`),\n                         KEY `idx_name` (`name`) USING BTREE\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;",
 	//}
