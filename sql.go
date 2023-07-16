@@ -43,7 +43,7 @@ func (dialector Dialector) Initialize(db *gorm.DB) error {
 		dialector.tables = make(map[string]*Table)
 	}
 	if dialector.Parser == nil {
-		dialector.Parser = &defaultParser{}
+		dialector.Parser = newDefaultParse()
 	}
 	if err := dialector.fileTOSQL(); err != nil {
 		return err
@@ -58,14 +58,13 @@ func (dialector Dialector) Initialize(db *gorm.DB) error {
 
 func (dialector Dialector) sqlTOTable() error {
 	for _, sql := range dialector.SQL {
-		tables, err := dialector.Parser.Tables(sql)
-		if err != nil {
+		if err := dialector.Parser.ParseSQL(sql); err != nil {
 			return err
 		}
-		for _, table := range tables {
-			dialector.tables[table.Name] = table
-		}
 	}
+
+	dialector.tables = dialector.Parser.GetTables()
+
 	return nil
 }
 
