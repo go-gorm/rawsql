@@ -10,3 +10,12 @@ CREATE TABLE `users` (
                          PRIMARY KEY (`id`),
                          KEY `idx_name` (`name`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+ALTER TABLE `users`
+    ADD COLUMN `gender` TINYINT UNSIGNED NOT NULL DEFAULT 0 COMMENT '' AFTER created_at;
+
+ALTER TABLE `users`
+    MODIFY COLUMN `gender` INT UNSIGNED NOT NULL DEFAULT 0 COMMENT '' AFTER created_at;
+
+ALTER TABLE `users`
+    CHANGE COLUMN gender sex TINYINT UNSIGNED NOT NULL DEFAULT 0 COMMENT '' AFTER created_at;
