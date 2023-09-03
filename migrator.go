@@ -1,6 +1,7 @@
 package rawsql
 
 import (
+	"database/sql"
 	"strings"
 
 	"gorm.io/gorm"
@@ -12,6 +13,23 @@ type Migrator struct {
 	Dialector
 }
 
+func (m Migrator) TableType(value interface{}) (tableType gorm.TableType, err error) {
+	err = m.RunWithValue(value, func(stmt *gorm.Statement) error {
+		var (
+			schema, tableName = m.CurrentSchema(stmt, stmt.Table)
+		)
+		table, ok := m.tables[tableName]
+		if ok && table != nil {
+			tableType = &migrator.TableType{
+				SchemaValue:  schema,
+				NameValue:    tableName,
+				CommentValue: sql.NullString{String: table.Comment, Valid: true},
+			}
+		}
+		return nil
+	})
+	return tableType, err
+}
 func (m Migrator) ColumnTypes(value interface{}) ([]gorm.ColumnType, error) {
 	columnTypes := make([]gorm.ColumnType, 0)
 	err := m.RunWithValue(value, func(stmt *gorm.Statement) error {

@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"reflect"
 	"strconv"
+	"strings"
 	"time"
 
 	"github.com/pingcap/tidb/parser"
@@ -20,6 +21,7 @@ type Table struct {
 	ColumnTypes []gorm.ColumnType
 	Indexes     []gorm.Index
 	Name        string
+	Comment     string
 }
 
 type Parser interface {
@@ -59,6 +61,7 @@ func (d *defaultParser) ParseSQL(sql string) error {
 
 			d.tables[tableName] = &Table{
 				Name:        tableName,
+				Comment:     create.Table.TableInfo.Comment,
 				ColumnTypes: d.getColumnTypes(create),
 				Indexes:     d.getIndexes(create),
 			}
@@ -177,9 +180,9 @@ func (*defaultParser) getColumnType(col *ast.ColumnDef) gorm.ColumnType {
 		NameValue: sql.NullString{Valid: true, String: col.Name.OrigColName()},
 		DataTypeValue: sql.NullString{
 			Valid:  true,
-			String: types.TypeToStr(col.Tp.GetType(), col.Tp.GetCharset()),
+			String: strings.ToLower(types.TypeToStr(col.Tp.GetType(), col.Tp.GetCharset())),
 		},
-		ColumnTypeValue: sql.NullString{Valid: true, String: col.Tp.String()},
+		ColumnTypeValue: sql.NullString{Valid: true, String: strings.ToLower(col.Tp.String())},
 		PrimaryKeyValue: sql.NullBool{
 			Bool:  mysql.HasPriKeyFlag(col.Tp.GetFlag()),
 			Valid: mysql.HasPriKeyFlag(col.Tp.GetFlag()),
