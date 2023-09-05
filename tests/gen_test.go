@@ -29,7 +29,7 @@ func TestSqlGen(t *testing.T) {
 	}
 	fmt.Println(db.Migrator().GetTables())
 
-	cts, err := db.Migrator().ColumnTypes("users")
+	cts, err := db.Migrator().ColumnTypes("credit_cards")
 	if err != nil {
 		fmt.Println(err.Error())
 
