@@ -231,9 +231,8 @@ func (*defaultParser) getColumnType(col *ast.ColumnDef) gorm.ColumnType {
 		if opt.Tp == ast.ColumnOptionDefaultValue {
 			if v, ok := opt.Expr.(*test_driver.ValueExpr); ok {
 				ct.DefaultValueValue = sql.NullString{
-					Valid: true, String: fmt.Sprint(v.Datum.GetValue()),
+					Valid: v.Datum.GetValue() != nil, String: fmt.Sprint(v.Datum.GetValue()),
 				}
-
 				continue
 			}
 
