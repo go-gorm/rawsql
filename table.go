@@ -4,7 +4,6 @@ import (
 	"database/sql"
 	"fmt"
 	"reflect"
-	"strconv"
 	"strings"
 	"time"
 
@@ -61,7 +60,7 @@ func (d *defaultParser) ParseSQL(sql string) error {
 
 			d.tables[tableName] = &Table{
 				Name:        tableName,
-				Comment:     create.Table.TableInfo.Comment,
+				Comment:     getTableComment(create),
 				ColumnTypes: d.getColumnTypes(create),
 				Indexes:     d.getIndexes(create),
 			}
@@ -142,6 +141,21 @@ func (d *defaultParser) ParseSQL(sql string) error {
 	return nil
 }
 
+func getTableComment(create *ast.CreateTableStmt) string {
+	if create == nil {
+		return ""
+	}
+	if create.Table.TableInfo != nil && create.Table.TableInfo.Comment != "" {
+		return create.Table.TableInfo.Comment
+	}
+	for _, tp := range create.Options {
+		if tp.Tp == ast.TableOptionComment {
+			return tp.StrValue
+		}
+	}
+	return ""
+}
+
 func (d *defaultParser) getColumnTypes(create *ast.CreateTableStmt) (cols []gorm.ColumnType) {
 	if create == nil || len(create.Cols) == 0 {
 		return nil
@@ -216,19 +230,9 @@ func (*defaultParser) getColumnType(col *ast.ColumnDef) gorm.ColumnType {
 		}
 		if opt.Tp == ast.ColumnOptionDefaultValue {
 			if v, ok := opt.Expr.(*test_driver.ValueExpr); ok {
-				dv := sql.NullString{
-					Valid: true,
+				ct.DefaultValueValue = sql.NullString{
+					Valid: true, String: fmt.Sprint(v.Datum.GetValue()),
 				}
-				switch v.Datum.Kind() {
-				case test_driver.KindInt64:
-					dv.String = strconv.FormatInt(v.Datum.GetInt64(), 10)
-				case test_driver.KindUint64:
-					dv.String = strconv.FormatUint(v.Datum.GetUint64(), 10)
-				default:
-					dv.String = v.Datum.GetString()
-				}
-
-				ct.DefaultValueValue = dv
 
 				continue
 			}

@@ -10,13 +10,13 @@ CREATE TABLE `credit_cards` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `created_at` datetime(3) DEFAULT NULL,
   `updated_at` datetime(3) DEFAULT NULL,
-  `deleted_at` datetime(3) DEFAULT NULL,
+  `deleted_at` datetime(3) DEFAULT '1970-01-01 08:01:00',
   `number` longtext,
-  `customer_refer` bigint(20) unsigned DEFAULT NULL,
+  `customer_refer` bigint(20) unsigned NOT NULL DEFAULT 1,
   `bank_id` bigint(20) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `idx_credit_cards_deleted_at` (`deleted_at`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='店铺用户表';
 
 
 CREATE TABLE `customers` (
@@ -27,7 +27,7 @@ CREATE TABLE `customers` (
   `bank_id` bigint(20) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `idx_customers_deleted_at` (`deleted_at`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='店铺用户表';
 
 
 CREATE TABLE `people` (
