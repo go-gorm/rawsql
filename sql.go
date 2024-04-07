@@ -5,7 +5,7 @@ import (
 	"os"
 	"path/filepath"
 
-	_ "github.com/pingcap/tidb/parser/test_driver"
+	_ "github.com/pingcap/tidb/pkg/parser/test_driver"
 	"gorm.io/gorm"
 	"gorm.io/gorm/clause"
 	"gorm.io/gorm/migrator"
