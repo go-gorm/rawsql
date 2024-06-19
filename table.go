@@ -7,11 +7,11 @@ import (
 	"strings"
 	"time"
 
-	"github.com/pingcap/tidb/parser"
-	"github.com/pingcap/tidb/parser/ast"
-	"github.com/pingcap/tidb/parser/mysql"
-	"github.com/pingcap/tidb/parser/test_driver"
-	"github.com/pingcap/tidb/parser/types"
+	"github.com/pingcap/tidb/pkg/parser"
+	"github.com/pingcap/tidb/pkg/parser/ast"
+	"github.com/pingcap/tidb/pkg/parser/mysql"
+	"github.com/pingcap/tidb/pkg/parser/test_driver"
+	"github.com/pingcap/tidb/pkg/parser/types"
 	"gorm.io/gorm"
 	"gorm.io/gorm/migrator"
 )
