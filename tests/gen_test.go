@@ -18,7 +18,7 @@ func TestSqlGen(t *testing.T) {
 				//SQL:      rawsql,                      //create table sql
 				FilePath: []string{
 					//"./sql/user.sql", // create table sql file
-					"./sql", // create table sql file directory
+					"./sql/xx.sql", // create table sql file directory
 				},
 			},
 		),
@@ -29,7 +29,7 @@ func TestSqlGen(t *testing.T) {
 	}
 	fmt.Println(db.Migrator().GetTables())
 
-	cts, err := db.Migrator().ColumnTypes("credit_cards")
+	cts, err := db.Migrator().ColumnTypes("grafana_detect_config")
 	if err != nil {
 		fmt.Println(err.Error())
 

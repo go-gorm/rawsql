@@ -268,6 +268,9 @@ func (d *defaultParser) getIndexes(create *ast.CreateTableStmt) []gorm.Index {
 			UniqueValue: sql.NullBool{Bool: ast.ConstraintUniq == cons.Tp, Valid: ast.ConstraintUniq == cons.Tp},
 		}
 		for _, col := range cons.Keys {
+			if col.Column == nil {
+				continue
+			}
 			idx.ColumnList = append(idx.ColumnList, col.Column.Name.String())
 		}
 		indexs = append(indexs, idx)
