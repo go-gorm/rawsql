@@ -1,0 +1,35 @@
+CREATE TABLE `grafana_detect_config` (
+                                         `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+                                         `bytetree_node_id` BIGINT NOT NULL DEFAULT '0',
+                                         `grafana_uid` VARCHAR ( 255 ) COLLATE utf8mb4_general_ci NOT NULL DEFAULT '',
+                                         `grafana_url` VARCHAR ( 2048 ) COLLATE utf8mb4_general_ci DEFAULT '',
+                                         `grafana_name` VARCHAR ( 255 ) CHARACTER
+                                             SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '',
+                                         `grafana_type` INT NOT NULL DEFAULT '0',
+                                         `detect_stage` INT NOT NULL DEFAULT '0',
+                                         `detect_switch` TINYINT ( 1 ) NOT NULL DEFAULT '1',
+                                         `panel_config` TEXT COLLATE utf8mb4_general_ci,
+                                         `extend_dashboard_id` BIGINT NOT NULL DEFAULT '0',
+                                         `create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                                         `update_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                                         `create_by` VARCHAR ( 128 ) CHARACTER
+                                             SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT '',
+                                         `update_by` VARCHAR ( 128 ) CHARACTER
+                                             SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT '',
+                                         `show_switch` TINYINT ( 1 ) DEFAULT '1',
+                                         `extra` VARCHAR ( 2048 ) COLLATE utf8mb4_general_ci DEFAULT '',
+                                         `channel` VARCHAR ( 256 ) COLLATE utf8mb4_general_ci DEFAULT '',
+                                         `multi_deploy_stage` VARCHAR ( 256 ) COLLATE utf8mb4_general_ci DEFAULT '',
+                                         `owners` VARCHAR ( 255 ) COLLATE utf8mb4_general_ci NOT NULL DEFAULT '',
+                                         `parent_nodes` JSON DEFAULT NULL,
+                                         `release_type` VARCHAR ( 255 ) COLLATE utf8mb4_general_ci DEFAULT '',
+                                         `task_execute_type` INT NOT NULL DEFAULT '1',
+                                         `vregion` VARCHAR ( 255 ) COLLATE utf8mb4_general_ci DEFAULT '',
+                                         `bytetree_path` VARCHAR ( 255 ) COLLATE utf8mb4_general_ci DEFAULT '',
+                                         `business_scene_id` INT DEFAULT '0',
+                                         PRIMARY KEY ( `id` ),
+                                         KEY `idx_bytetree_node_id` ( `bytetree_node_id` ),
+                                         KEY `idx_extend_dashboard_id` ( `extend_dashboard_id` ),
+                                         KEY `idx_business_scene_id` ( `business_scene_id` ),
+                                         KEY `idx_parent_nodes` ( ( cast( `parent_nodes` AS UNSIGNED array ) ) )
+) ENGINE = InnoDB AUTO_INCREMENT = 1248 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '看板配置表';
